@@ -1,133 +1,157 @@
-// 여기만 수정하면 돼요!
-// date는 반드시 YYYY-MM-DD 형식으로 적기
-// password는 편지마다 다르게 설정 가능
 const letters = [
   {
     date: "2026-07-06",
     title: "오늘의 편지",
     password: "0418",
-    content: `오늘 하루 어땠어?
+    hint: "우리가 처음 만난 날짜",
+    content: `
+오늘 하루 어땠어?
 
-나는 오늘도 네 생각이 많이 났어.
-별거 아닌 하루도 너랑 이어져 있다고 생각하면 조금 더 특별해지는 것 같아.
+나는 오늘도 네 생각을 많이 했어.
+항상 고맙고, 많이 사랑해. 💙
 
-이 편지를 열어줘서 고마워.
-오늘도 많이 좋아해. 💙`
+- 예은이가 -
+    `
   },
   {
     date: "2026-07-07",
     title: "내일의 편지",
     password: "0707",
-    content: `이건 내일 열 수 있는 편지야.
+    hint: "내일 날짜 네 자리",
+    content: `
+이건 내일 열리는 편지야.
 
-내일의 너도 분명 잘하고 있을 거야.
-늘 응원하고 있어.`
+내일도 너한테 좋은 하루가 됐으면 좋겠어.
+오늘보다 더 많이 사랑해. 💙
+
+- 예은이가 -
+    `
   },
   {
     date: "2026-07-08",
     title: "그 다음 날의 편지",
-    password: "blue",
-    content: `오늘도 편지를 열어줘서 고마워.
+    password: "love",
+    hint: "사랑을 영어로",
+    content: `
+세 번째 편지도 열어줘서 고마워.
 
-하루하루 하나씩 쌓이는 우리 이야기가 너무 소중해.`
+이렇게 하나씩 편지를 남기는 것도
+괜히 설레고 좋다.
+
+항상 내 편이 되어줘서 고마워. 💙
+
+- 예은이가 -
+    `
   }
 ];
 
-const passwordInput = document.getElementById("passwordInput");
-const message = document.getElementById("message");
-const letterBox = document.getElementById("letterBox");
-const letterDate = document.getElementById("letterDate");
-const letterTitle = document.getElementById("letterTitle");
-const letterContent = document.getElementById("letterContent");
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 const letterList = document.getElementById("letterList");
-const todayDate = document.getElementById("todayDate");
+const selectedDate = document.getElementById("selectedDate");
+const selectedTitle = document.getElementById("selectedTitle");
+const passwordInput = document.getElementById("passwordInput");
+const openBtn = document.getElementById("openBtn");
+const hintText = document.getElementById("hintText");
+const messageText = document.getElementById("messageText");
+const letterBox = document.getElementById("letterBox");
+const letterContent = document.getElementById("letterContent");
 
-const today = getKoreaDateString();
-const todayLetter = letters.find(letter => letter.date === today);
+let currentLetter = null;
 
-todayDate.textContent = formatDate(today);
-renderLetterList();
-
-passwordInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") {
-    openTodayLetter();
-  }
-});
-
-function openTodayLetter() {
-  if (!todayLetter) {
-    showMessage("오늘 등록된 편지가 아직 없어요.", "error");
-    return;
-  }
-
-  const inputPassword = passwordInput.value.trim();
-
-  if (inputPassword === todayLetter.password) {
-    showMessage("암호가 맞았어요!", "success");
-    showLetter(todayLetter);
-  } else {
-    showMessage("암호가 틀렸어요! 다시 시도해 주세요.", "error");
-    letterBox.classList.add("hidden");
-  }
+function formatDate(dateString) {
+  const date = new Date(dateString + "T00:00:00");
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  return `${dateString.replaceAll("-", ".")} (${days[date.getDay()]})`;
 }
 
-function showLetter(letter) {
-  letterDate.textContent = formatDate(letter.date);
-  letterTitle.textContent = letter.title;
-  letterContent.textContent = letter.content;
-  letterBox.classList.remove("hidden");
+function isAvailable(dateString) {
+  const letterDate = new Date(dateString + "T00:00:00");
+  letterDate.setHours(0, 0, 0, 0);
+  return letterDate <= today;
 }
 
-function renderLetterList() {
+function renderLetters() {
   letterList.innerHTML = "";
 
-  letters.forEach(letter => {
-    const isOpen = letter.date <= today;
+  letters.forEach((letter, index) => {
+    const available = isAvailable(letter.date);
 
     const item = document.createElement("div");
     item.className = "letter-item";
-
     item.innerHTML = `
-      <div class="letter-icon">${isOpen ? "💌" : "✉️"}</div>
-      <div class="letter-info">
-        <strong>${formatDate(letter.date)}</strong>
-        <span>${letter.title}</span>
+      <div class="letter-left">
+        <div class="letter-icon">${available ? "💌" : "✉️"}</div>
+        <div>
+          <div class="letter-date">${formatDate(letter.date)}</div>
+          <div class="letter-title">${letter.title}</div>
+        </div>
       </div>
-      <div class="status ${isOpen ? "" : "locked"}">
-        ${isOpen ? "열람 가능 ›" : "잠김 🔒"}
+      <div class="letter-status">
+        ${available ? "열람 가능 ›" : "잠김 🔒"}
       </div>
     `;
+
+    item.addEventListener("click", () => {
+      if (!available) {
+        alert("아직 열 수 없는 편지야!");
+        return;
+      }
+
+      selectLetter(index);
+    });
 
     letterList.appendChild(item);
   });
 }
 
-function showMessage(text, type) {
-  message.textContent = text;
-  message.className = `message ${type}`;
+function selectLetter(index) {
+  currentLetter = letters[index];
+
+  selectedDate.textContent = formatDate(currentLetter.date);
+  selectedTitle.textContent = currentLetter.title;
+
+  passwordInput.value = "";
+  messageText.textContent = "";
+  letterBox.classList.add("hidden");
+  letterContent.textContent = "";
+
+  hintText.textContent = "💡 힌트 : " + currentLetter.hint;
 }
 
-function scrollToList() {
-  document.getElementById("list").scrollIntoView({ behavior: "smooth" });
+function openLetter() {
+  if (!currentLetter) {
+    alert("먼저 편지를 선택해줘!");
+    return;
+  }
+
+  const inputPassword = passwordInput.value.trim();
+
+  if (inputPassword === currentLetter.password) {
+    messageText.textContent = "암호가 맞았어요!";
+    messageText.style.color = "#4a90e2";
+
+    letterContent.textContent = currentLetter.content.trim();
+    letterBox.classList.remove("hidden");
+  } else {
+    messageText.textContent = "암호가 틀렸어요!";
+    messageText.style.color = "#e06b6b";
+    letterBox.classList.add("hidden");
+  }
 }
 
-function getKoreaDateString() {
-  const now = new Date();
-  const koreaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
-  const year = koreaTime.getFullYear();
-  const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
-  const day = String(koreaTime.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+openBtn.addEventListener("click", openLetter);
 
-function formatDate(dateString) {
-  const date = new Date(dateString + "T00:00:00");
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
+passwordInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    openLetter();
+  }
+});
 
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const week = days[date.getDay()];
+renderLetters();
 
-  return `${year}.${month}.${day} (${week})`;
+const firstAvailableIndex = letters.findIndex(letter => isAvailable(letter.date));
+if (firstAvailableIndex !== -1) {
+  selectLetter(firstAvailableIndex);
 }

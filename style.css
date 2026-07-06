@@ -1,291 +1,146 @@
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@400;600&display=swap');
-
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Gowun Dodum', sans-serif;
-  color: #1f2937;
-  background: #cfe9ff;
+    font-family: "Pretendard", sans-serif;
+    background-color: #cfe8ff; /* 연하늘색 */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
 }
 
-.page {
-  min-height: 100vh;
-  padding: 36px 18px 28px;
-  position: relative;
-}
-
-.top-link {
-  position: fixed;
-  top: 28px;
-  right: 32px;
-  border: 0;
-  background: transparent;
-  font-size: 16px;
-  color: #26384d;
-  cursor: pointer;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(38, 56, 77, 0.5);
-  z-index: 5;
-}
-
-.hero {
-  max-width: 620px;
-  margin: 0 auto;
-  text-align: center;
-  padding-top: 28px;
-}
-
-.envelope {
-  font-size: 34px;
-  margin-bottom: 16px;
-}
-
-.date {
-  margin: 0 0 8px;
-  font-size: 16px;
-  font-weight: 600;
+.container {
+    width: 90%;
+    max-width: 700px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 h1 {
-  margin: 0;
-  font-family: 'Noto Serif KR', serif;
-  font-size: 42px;
-  font-weight: 400;
-  letter-spacing: 8px;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 500;
 }
 
-.title-line {
-  width: 42px;
-  height: 2px;
-  background: #5aa7f0;
-  margin: 18px auto 24px;
-  border-radius: 99px;
-}
-
-.password-card,
-.letter-box,
-.letter-list {
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 45px rgba(65, 120, 170, 0.18);
-  border-radius: 18px;
-  backdrop-filter: blur(8px);
-}
-
-.password-card {
-  padding: 24px 28px;
-  margin-bottom: 28px;
-}
-
-.lock-text {
-  margin: 0 0 18px;
-  font-weight: 600;
-}
-
-.input-row {
-  display: flex;
-  gap: 8px;
-}
-
-input {
-  flex: 1;
-  height: 46px;
-  padding: 0 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.85);
-  font-family: inherit;
-  font-size: 15px;
-  outline: none;
-}
-
-input:focus {
-  border-color: #5aa7f0;
-}
-
-button {
-  height: 46px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 10px;
-  background: #5aa7f0;
-  color: white;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  background: #4192df;
-}
-
-.message {
-  min-height: 22px;
-  margin: 14px 0 0;
-  font-weight: 700;
-}
-
-.message.error {
-  color: #ef4444;
-}
-
-.message.success {
-  color: #2563eb;
-}
-
-.letter-box {
-  margin: 0 auto 30px;
-  padding: 28px;
-  text-align: left;
-  animation: fadeUp 0.4s ease;
-}
-
-.letter-date {
-  text-align: center;
-  font-size: 14px;
-  margin: 0 0 4px;
-  color: #64748b;
-}
-
-.letter-box h2 {
-  margin: 0 0 22px;
-  text-align: center;
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 600;
-}
-
-.letter-box p {
-  line-height: 1.9;
-  white-space: pre-line;
-}
-
-.signature {
-  margin-top: 28px;
-  text-align: right;
-  font-weight: 700;
-}
-
-.hidden {
-  display: none;
-}
-
-.list-section {
-  max-width: 620px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.list-section h2 {
-  margin: 18px 0;
-  font-size: 20px;
-}
-
-.letter-list {
-  overflow: hidden;
+#letterList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
 .letter-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-  text-align: left;
+    background: white;
+    border-radius: 18px;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.letter-item:last-child {
-  border-bottom: 0;
+.letter-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.letter-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .letter-icon {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: #e8f3ff;
-  font-size: 22px;
+    font-size: 28px;
 }
 
-.letter-info {
-  flex: 1;
-}
-
-.letter-info strong {
-  display: block;
-  margin-bottom: 4px;
-}
-
-.letter-info span {
-  font-size: 14px;
-  color: #64748b;
-}
-
-.status {
-  font-weight: 700;
-  font-size: 14px;
-  color: #2563eb;
-}
-
-.status.locked {
-  color: #64748b;
-}
-
-.footer {
-  text-align: center;
-  margin: 24px 0 0;
-  font-size: 17px;
-  letter-spacing: 2px;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 640px) {
-  .page {
-    padding: 24px 14px;
-  }
-
-  .top-link {
-    top: 18px;
-    right: 18px;
+.letter-date {
     font-size: 14px;
-  }
+    color: #777;
+}
 
-  .hero {
-    padding-top: 52px;
-  }
+.letter-title {
+    font-size: 18px;
+    font-weight: 600;
+}
 
-  h1 {
-    font-size: 34px;
-    letter-spacing: 5px;
-  }
+.letter-status {
+    color: #6d8fb5;
+    font-size: 14px;
+}
 
-  .password-card,
-  .letter-box {
-    padding: 22px 18px;
-  }
+.selected-box {
+    margin-top: 20px;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+}
 
-  .input-row {
-    flex-direction: column;
-  }
+#selectedDate {
+    color: #7d7d7d;
+    margin-bottom: 8px;
+}
 
-  button {
+#selectedTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+input {
     width: 100%;
-  }
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #eef6ff;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #8ec5ff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #74b7ff;
+}
+
+#hintText {
+    margin-top: 15px;
+    color: #6d7c90;
+    font-size: 14px;
+}
+
+#messageText {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#letterBox {
+    margin-top: 25px;
+    background: #f8fbff;
+    padding: 25px;
+    border-radius: 15px;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.hidden {
+    display: none;
 }

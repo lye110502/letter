@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘의 편지</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <button class="top-link" onclick="scrollToList()">☷ 편지 목록</button>
+
+    <section class="hero">
+      <div class="envelope">✉️</div>
+      <p class="date" id="todayDate"></p>
+      <h1>오늘의 편지</h1>
+      <div class="title-line"></div>
+
+      <section class="password-card">
+        <p class="lock-text">🔒 이 편지는 암호를 풀어야 열 수 있어요.</p>
+        <div class="input-row">
+          <input id="passwordInput" type="password" placeholder="암호를 입력하세요" />
+          <button onclick="openTodayLetter()">열기</button>
+        </div>
+        <p id="message" class="message"></p>
+      </section>
+
+      <section id="letterBox" class="letter-box hidden">
+        <p class="letter-date" id="letterDate"></p>
+        <h2 id="letterTitle"></h2>
+        <p id="letterContent"></p>
+        <p class="signature">- 예은이가 -</p>
+      </section>
+    </section>
+
+    <section id="list" class="list-section">
+      <h2>편지 목록</h2>
+      <div id="letterList" class="letter-list"></div>
+    </section>
+
+    <p class="footer">사랑해, 오늘도 내일도 💙</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
